@@ -2,17 +2,16 @@ name: Publish complete G.B.G 1.8.11
 
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: [main]
+  push:
+    paths:
+      - ".github/workflows/restore-complete-addon.yml"
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   publish:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.title == 'Publish complete G.B.G 1.8.11'
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repository history

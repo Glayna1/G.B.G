@@ -1,8 +1,12 @@
 # G.B.G — Glayna Better Guild
 
-**Version 1.8.10** · **World of Warcraft 3.3.5a / Ascension: Conquest of Azeroth** · Interface `30300`
+**Version 1.8.11** · **World of Warcraft 3.3.5a / Ascension: Conquest of Azeroth** · Interface `30300`
 
 G.B.G remplace la fenêtre de guilde Blizzard par un véritable espace de guilde moderne et synchronisé : discussion persistante, mentions, profils, portraits, Main/rerolls, notes privées, alertes de connexion, bannières personnalisées, invitations, recherche d’activités JcE/JcJ et recrutement inter-guildes.
+
+## Dépôt complet
+
+Le dossier `GBG` de ce dépôt contient l’intégralité de l’addon : code Lua, manifeste, fichiers de configuration et médias TGA. Pour l’installer, téléchargez le dépôt puis copiez le dossier `GBG` dans `World of Warcraft\Interface\AddOns\`.
 
 ## Fonctionnalités principales
 
@@ -21,15 +25,14 @@ G.B.G remplace la fenêtre de guilde Blizzard par un véritable espace de guilde
 
 1. Fermez complètement World of Warcraft.
 2. Supprimez toute ancienne installation nommée `GlaynasMidnightGuild` ou `GBG`.
-3. Placez le dossier complet `GBG` dans :
+3. Téléchargez le dépôt avec **Code > Download ZIP**.
+4. Extrayez puis placez uniquement le dossier `GBG` dans :
 
 ```text
 World of Warcraft\Interface\AddOns\
 ```
 
-4. Lancez le jeu et activez **G.B.G — Glayna Better Guild** dans la liste des addons.
-
-Le paquet complet avec les médias est disponible sur **addon.devquestlog.com**.
+5. Lancez le jeu et activez **G.B.G — Glayna Better Guild** dans la liste des addons.
 
 ## Commandes
 
@@ -40,13 +43,9 @@ Le paquet complet avec les médias est disponible sur **addon.devquestlog.com**.
 
 Les anciennes commandes `/gmg` et `/midnightguild` restent prises en charge pour compatibilité.
 
-## Version 1.8.10
+## Version 1.8.11
 
-- Autorité de publication de l’annonce de recrutement pour le maître de guilde, les officiers et les membres explicitement autorisés.
-- Base distribuée conservant le dernier état valide de chaque annonce ou suppression.
-- Transport inter-guildes compact, brouillé et protégé par somme de contrôle.
-- Préremplissage de l’invitation par `Maj + clic` sans envoi automatique.
-- Action native **Invite to Guild / Guilder** dans le menu contextuel des noms du tchat standard.
+Cette branche publie le paquet complet fourni pour la version 1.8.11, avec l’intégralité des sources et médias nécessaires au fonctionnement de l’addon.
 
 ## Confidentialité et synchronisation
 

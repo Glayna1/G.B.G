@@ -1,20 +1,16 @@
-name: Restore complete G.B.G addon
+name: Publish complete G.B.G 1.8.11
 
 on:
   workflow_dispatch:
   push:
     paths:
       - ".github/workflows/restore-complete-addon.yml"
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: write
-  pull-requests: read
 
 jobs:
-  restore:
+  publish:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
@@ -22,28 +18,36 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Restore the complete addon folder
+      - name: Restore all media and apply 1.8.11 code
         shell: bash
         run: |
           set -euo pipefail
           rm -rf /tmp/gbg-restore
           mkdir -p /tmp/gbg-restore
+
+          # Restore the complete 229-file addon tree, including every TGA asset.
           git show 938583890c8e3a820bb8d9f40cf69788709689b9:GBG_1.8.6.zip > /tmp/GBG_1.8.6.zip
           unzip -q /tmp/GBG_1.8.6.zip -d /tmp/gbg-restore
           test -d /tmp/gbg-restore/GBG
           rm -rf GBG
           cp -a /tmp/gbg-restore/GBG ./GBG
+
+          # Overlay every supplied non-media file from version 1.8.11.
+          test -f .bootstrap/GBG_1.8.11_code.b64
+          base64 --decode .bootstrap/GBG_1.8.11_code.b64 > /tmp/GBG_1.8.11_code.zip
+          echo "15de3d049d48d08372a8a63fd3f46ff5c7118506c933b2a06fc7c26c43e13f5a  /tmp/GBG_1.8.11_code.zip" | sha256sum --check
+          unzip -oq /tmp/GBG_1.8.11_code.zip -d .
+
+          # Refuse publication if anything is incomplete or still reports 1.8.6.
           test -f GBG/GBG.toc
-          test "$(find GBG -type f | wc -l | tr -d ' ')" -ge 200
+          grep -q '^## Version: 1.8.11' GBG/GBG.toc
+          test "$(find GBG -type f | wc -l | tr -d ' ')" -eq 229
+          test "$(find GBG -type f -iname '*.tga' | wc -l | tr -d ' ')" -ge 200
+
           rm -rf .bootstrap
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Restore complete G.B.G addon files"
-            git push origin "HEAD:${{ github.head_ref || github.ref_name }}"
-          fi
+          git commit -m "Publish complete G.B.G 1.8.11 addon"
+          git push

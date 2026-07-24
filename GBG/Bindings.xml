@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="GMG_TOGGLE" header="GLAYNABETTERGUILD">
+        GlaynaBetterGuild:Toggle()
+    </Binding>
+</Bindings>

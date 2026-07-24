@@ -1,0 +1,35 @@
+G.B.G — GLAYNA BETTER GUILD - BANNER ASSET CATALOG v1.5.6
+
+Emblem / Shield assets 11-30:
+shield_11.tga = phénix_stylisé_en_silhouette_blanche.png
+shield_12.tga = écusson_céleste_orné_en_blanc.png
+shield_13.tga = emblème_de_tête_de_loup_stylisé.png
+shield_14.tga = couronne_royale_ornementée_silhouette.png
+shield_15.tga = haches_croisées_au_style_orné.png
+shield_16.tga = emblème_tribal_de_dragon_symétrique.png
+shield_17.tga = symbole_solaire_orné_sur_fond_transparent.png
+shield_18.tga = emblème_ancré_et_orné_d_ondes.png
+shield_19.tga = blason_gothique_avec_crâne_et_cornes.png
+shield_20.tga = arbre_de_vie_en_silhouette_blanche.png
+shield_21.tga = œil_mystique_avec_motifs_tribaux.png
+shield_22.tga = emblème_héraldique_avec_lances_croisées.png
+shield_23.tga = blason_gothique_avec_crâne_d_oiseau.png
+shield_24.tga = tête_de_lion_héraldique_stylisée.png
+shield_25.tga = emblème_lunaire_orné_en_blanc.png
+shield_26.tga = écusson_de_poing_gauntleté_et_flamme.png
+shield_27.tga = emblème_tribal_de_kraken.png
+shield_28.tga = marteau_orné_avec_ailes_emblématiques.png
+shield_29.tga = silhouette_tribale_de_crâne_de_bélier.png
+shield_30.tga = emblème_héraldique_de_gryphons.png
+
+Border assets 11-20:
+border_11.tga = cadre_orné_en_style_gothique.png
+border_12.tga = cadre_orné_de_style_elfique.png
+border_13.tga = cadre_ornemental_médiéval_en_blanc.png
+border_14.tga = cadre_fantaisie_orné_avec_dragon.png
+border_15.tga = cadre_décoratif_magique_symétrique.png
+border_16.tga = cadre_tribal_orné_symétrique.png
+border_17.tga = cadre_orné_démoniaque_et_tribal.png
+border_18.tga = cadre_orné_et_héraldique_blanc.png
+border_19.tga = cadre_orné_alchimique_et_gothique.png
+border_20.tga = cadre_orné_inspiré_de_la_nature.png

@@ -1,0 +1,43 @@
+name: Restore complete G.B.G addon
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/restore-complete-addon.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore the complete addon folder
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/gbg-restore
+          mkdir -p /tmp/gbg-restore
+          git show 938583890c8e3a820bb8d9f40cf69788709689b9:GBG_1.8.6.zip > /tmp/GBG_1.8.6.zip
+          unzip -q /tmp/GBG_1.8.6.zip -d /tmp/gbg-restore
+          test -d /tmp/gbg-restore/GBG
+          rm -rf GBG
+          cp -a /tmp/gbg-restore/GBG ./GBG
+          test -f GBG/GBG.toc
+          test "$(find GBG -type f | wc -l | tr -d ' ')" -ge 200
+          rm -rf .bootstrap
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Restore complete G.B.G addon files"
+            git push
+          fi

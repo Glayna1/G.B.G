@@ -2,6 +2,8 @@ name: Publish complete G.B.G 1.8.11
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
   schedule:
     - cron: '*/5 * * * *'
 
@@ -10,6 +12,7 @@ permissions:
 
 jobs:
   publish:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repository history
@@ -46,6 +49,7 @@ jobs:
 
           # Remove temporary publication files from the final repository.
           rm -rf .bootstrap
+          rm -f .github/GBG_1.8.11_PUBLICATION_TRIGGER.md
           rm -f .github/workflows/restore-complete-addon.yml
           rmdir .github/workflows 2>/dev/null || true
           rmdir .github 2>/dev/null || true

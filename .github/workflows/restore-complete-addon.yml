@@ -2,16 +2,14 @@ name: Publish complete G.B.G 1.8.11
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/restore-complete-addon.yml"
+  schedule:
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
 
 jobs:
   publish:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repository history
@@ -46,7 +44,12 @@ jobs:
           test "$(find GBG -type f | wc -l | tr -d ' ')" -eq 229
           test "$(find GBG -type f -iname '*.tga' | wc -l | tr -d ' ')" -ge 200
 
+          # Remove temporary publication files from the final repository.
           rm -rf .bootstrap
+          rm -f .github/workflows/restore-complete-addon.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A

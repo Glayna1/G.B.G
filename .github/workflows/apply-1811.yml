@@ -1,0 +1,38 @@
+name: Apply G.B.G 1.8.11
+
+on:
+  push:
+    paths:
+      - ".github/workflows/apply-1811.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply version 1.8.11 code over complete addon
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d GBG
+          test -f .bootstrap/GBG_1.8.11_code.b64
+          base64 --decode .bootstrap/GBG_1.8.11_code.b64 > /tmp/GBG_1.8.11_code.zip
+          echo "15de3d049d48d08372a8a63fd3f46ff5c7118506c933b2a06fc7c26c43e13f5a  /tmp/GBG_1.8.11_code.zip" | sha256sum --check
+          unzip -oq /tmp/GBG_1.8.11_code.zip -d .
+          grep -q '^## Version: 1.8.11' GBG/GBG.toc
+          test "$(find GBG -type f | wc -l | tr -d ' ')" -eq 229
+          rm -rf .bootstrap .restore-trigger
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish complete G.B.G 1.8.11 addon"
+          git push

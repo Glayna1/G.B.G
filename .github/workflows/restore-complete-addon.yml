@@ -2,19 +2,20 @@ name: Publish complete G.B.G 1.8.11
 
 on:
   workflow_dispatch:
-  issues:
+  pull_request:
     types: [opened]
+    branches: [main]
 
 permissions:
   contents: write
-  issues: write
+  pull-requests: write
 
 jobs:
   publish:
-    if: github.event_name == 'workflow_dispatch' || github.event.issue.title == 'Publish complete G.B.G 1.8.11'
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.title == 'Publish complete G.B.G 1.8.11'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository history
+      - name: Checkout main repository history
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -40,7 +41,7 @@ jobs:
           echo "15de3d049d48d08372a8a63fd3f46ff5c7118506c933b2a06fc7c26c43e13f5a  /tmp/GBG_1.8.11_code.zip" | sha256sum --check
           unzip -oq /tmp/GBG_1.8.11_code.zip -d .
 
-          # Refuse publication if anything is incomplete or still reports 1.8.6.
+          # Refuse publication if anything is incomplete.
           test -f GBG/GBG.toc
           grep -q '^## Version: 1.8.11' GBG/GBG.toc
           test "$(find GBG -type f | wc -l | tr -d ' ')" -eq 229
@@ -52,9 +53,3 @@ jobs:
           git add -A
           git commit -m "Publish complete G.B.G 1.8.11 addon"
           git push origin main
-
-      - name: Close trigger issue
-        if: github.event_name == 'issues'
-        uses: peter-evans/close-issue@v3
-        with:
-          comment: "G.B.G 1.8.11 was published successfully."

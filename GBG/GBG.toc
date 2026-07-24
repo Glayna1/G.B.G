@@ -1,0 +1,30 @@
+## Interface: 30300
+## Title: |cff9a7cffG.B.G|r |cffd8d3e8— Glayna Better Guild|r
+## Notes: Replaces the Blizzard guild window with a synchronized guild hub: shared chat and mentions, profiles and avatars, Main/alt links, private notes, login alerts, movable notifications, guild banners, scalable UI, guild invitations, a PvE/PvP Guild Finder, and cross-guild recruitment with permission-controlled advertisements, official banners, persistent applications, refusal reasons, distributed relay storage, protected transport, Shift-click invite prefilling and a native chat “Invite to Guild / Guilder” action.
+## Notes-frFR: Remplace la fenêtre de guilde Blizzard par un espace synchronisé : discussion et mentions, profils et portraits, Main/rerolls, notes privées, alertes, notifications déplaçables, bannières, interface redimensionnable, invitations, Finder JcE/JcJ et recrutement inter-guildes avec annonces soumises à permissions, bannières officielles, candidatures persistantes, raisons de refus, relais distribué, transport protégé, préremplissage par Maj + clic et action « Guilder » dans le menu du tchat standard.
+## Author: Glayna
+## Version: 1.8.10
+## X-Website: addon.devquestlog.com
+## SavedVariables: GBGDB, GlaynasMidnightGuildDB
+
+Core.lua
+Sync.lua
+UI.lua
+Banner.lua
+BannerSettings.lua
+Unread.lua
+DungeonFinder.lua
+DungeonFinderLead.lua
+DungeonFinderRoles.lua
+DungeonFinderEnhancements.lua
+DungeonFinderLifetime.lua
+SocialGuildRedirect.lua
+
+DungeonFinderPolish.lua
+DungeonFinderFix179.lua
+InterfaceScale.lua
+PortraitSafety.lua
+GuildInvite.lua
+GuildRecruitment.lua
+
+RecruitmentAuthority.lua

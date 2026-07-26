@@ -1,1 +1,0 @@
-Trigger the validated publication of the complete G.B.G 1.8.11 addon on main.

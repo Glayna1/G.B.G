@@ -1,0 +1,46 @@
+name: Apply G.B.G 1.8.26 to main
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".bootstrap/GBG_1.8.26_patch.b64"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Apply G.B.G 1.8.26
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 --decode .bootstrap/GBG_1.8.26_patch.b64 > /tmp/GBG_1.8.26_patch.zip
+          echo "4d44c340a19450c262946c37d80245ad2f7cf56a6588de8269c290821a572dd1  /tmp/GBG_1.8.26_patch.zip" | sha256sum --check
+          unzip -oq /tmp/GBG_1.8.26_patch.zip -d .
+          grep -q '^## Version: 1.8.26' GBG/GBG.toc
+          grep -q '^## Interface: 30300' GBG/GBG.toc
+          test -f GBG/AntiSpam.lua
+          test -f GBG/Minimap.lua
+          test -f GBG/Performance.lua
+          test -f GBG/RecruitmentAuthority.lua
+          test -f GBG/Runtime.lua
+          test -f GBG/StartupState.lua
+          test -f GBG/Media/GBG_Minimap.tga
+          rm -rf .bootstrap
+          rm -f .github/workflows/apply-gbg-1.8.26.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Update G.B.G to 1.8.26"
+          git push origin main

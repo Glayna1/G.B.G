@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - ".bootstrap/GBG_1.8.26_patch.b64"
+      - ".bootstrap/APPLY_1.8.26"
 
 permissions:
   contents: write
@@ -23,7 +23,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base64 --decode .bootstrap/GBG_1.8.26_patch.b64 > /tmp/GBG_1.8.26_patch.zip
+          cat .bootstrap/GBG_1.8.26_patch.part* > /tmp/GBG_1.8.26_patch.b64
+          base64 --decode /tmp/GBG_1.8.26_patch.b64 > /tmp/GBG_1.8.26_patch.zip
           echo "4d44c340a19450c262946c37d80245ad2f7cf56a6588de8269c290821a572dd1  /tmp/GBG_1.8.26_patch.zip" | sha256sum --check
           unzip -oq /tmp/GBG_1.8.26_patch.zip -d .
           grep -q '^## Version: 1.8.26' GBG/GBG.toc

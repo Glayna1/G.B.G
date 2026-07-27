@@ -1,16 +1,15 @@
 name: Apply G.B.G 1.8.26 to main
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".bootstrap/APPLY_1.8.26"
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   apply:
+    if: github.event.issue.title == 'Apply G.B.G 1.8.26'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
@@ -23,9 +22,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .bootstrap/GBG_1.8.26_patch.part* > /tmp/GBG_1.8.26_patch.b64
+          cat .bootstrap/GBG_1.8.26_newpart* > /tmp/GBG_1.8.26_patch.b64
           base64 --decode /tmp/GBG_1.8.26_patch.b64 > /tmp/GBG_1.8.26_patch.zip
-          echo "4d44c340a19450c262946c37d80245ad2f7cf56a6588de8269c290821a572dd1  /tmp/GBG_1.8.26_patch.zip" | sha256sum --check
+          echo "199998e35d1f0a5243056e5fd1949008158aeb0afe9b010a36d8a7bfaa11e460  /tmp/GBG_1.8.26_patch.zip" | sha256sum --check
           unzip -oq /tmp/GBG_1.8.26_patch.zip -d .
           grep -q '^## Version: 1.8.26' GBG/GBG.toc
           grep -q '^## Interface: 30300' GBG/GBG.toc
@@ -36,10 +35,13 @@ jobs:
           test -f GBG/Runtime.lua
           test -f GBG/StartupState.lua
           test -f GBG/Media/GBG_Minimap.tga
+
           rm -rf .bootstrap
+          rm -f GBG/GBG.toc.__tmp1826 GBG/GBG.toc.__tmp1826b64
           rm -f .github/workflows/apply-gbg-1.8.26.yml
           rmdir .github/workflows 2>/dev/null || true
           rmdir .github 2>/dev/null || true
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
